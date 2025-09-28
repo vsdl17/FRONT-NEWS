@@ -19,10 +19,11 @@
             </style>
         @endif
     </head>
-    <body>
+  <body>
+    @include('components.navbar')
         @php
             $font_size = $data['settings']['font_size']; 
-            $font_color = $data['settings']['font_color']; 
+            $font_color = $data['settings']['font_color'] ?? 'red-400'; 
         @endphp
         <div class="relative isolate overflow-hidden bg-gray-900 px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
   <div class="absolute inset-0 -z-10 overflow-hidden">
@@ -43,7 +44,7 @@
       <div class="lg:pr-4">
         <div class="lg:max-w-lg">
            <p class="text-base/7 font-semibold text-indigo-400">{{ $data['author'] }}</p>
-          <h1 class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-[{{ $font_color }}] sm:text-5xl">{{ $data['title'] }}</h1>
+          <h1 class="mt-2 text-4xl font-semibold tracking-tight text-pretty sm:text-5xl" style="color: {{ $font_color }};">{{ $data['title'] }}</h1>
         </div>
       </div>
     </div>
@@ -55,15 +56,16 @@
         <div class="max-w-xl text-base/7 text-gray-400 lg:max-w-lg">
             <p>{{ $data['description'] }}</p>
             <ul role="list" class="mt-8 space-y-8 text-gray-400">
+                <h2 class="text-2xl font-semibold text-white mb-4">Noticias recomendadas</h2>
                 @if(empty($recomended))
                     <div>no hay nada</div>
                     @else
-                    <div class="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-700 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-                    @foreach($recomended as $item)
-                        <article class="flex max-w-xl flex-col items-start justify-between">
+                    <div class="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-700 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none">
+                      @foreach($recomended as $item)
+                        <article class="flex max-w-xl flex-col items-start justify-between hover:bg-gray-800/60 p-4 rounded-lg">
                         <div class="flex items-center gap-x-4 text-xs">
                         <time datetime="2020-03-16" class="text-gray-400">Mar 16, 2020</time>
-                        <a href="#" class="relative z-10 rounded-full bg-gray-800/60 px-3 py-1.5 font-medium text-gray-300 hover:bg-gray-800">{{ $item['category_name'] }}</a>
+                        <a href="#" class="relative z-10 rounded-full bg-gray-800/60 px-3 py-1.5 font-medium text-gray-300 hover:bg-gray-800">{{ $item['category']['name'] }}</a>
                         </div>
                         <div class="group relative grow">
                         <h3 class="mt-3 text-lg/6 font-semibold text-white group-hover:text-gray-300">
@@ -74,40 +76,20 @@
                         </h3>
                         <p class="mt-5 line-clamp-3 text-sm/6 text-gray-400">{{ $item['short_description'] }}</p>
                         </div>
-                        <div class="relative mt-8 flex items-center gap-x-4 justify-self-end">
-                        <img src="{{ $item['image'] }}" alt="" class="size-10 rounded-full bg-gray-800" />
+                        <div class=" w-full relative mt-8 flex flex-col items-center gap-x-4 justify-self-end">
+                        <img src="{{ $item['image'] }}" alt="" class="w-full h-24 object-cover rounded-lg bg-gray-800" />
                         <div class="text-sm/6">
-                            <p class="font-semibold text-white">
+                          <p class="font-semibold text-white">
                             <a href="#">
-                                <span class="absolute inset-0"></span>
-                                {{ $item['author'] }}
+                              <span class="absolute inset-0"></span>
+                              {{ $item['author'] }}
                             </a>
-                            </p>
-                        </div>
+                          </p>
                         </div>
                     </article>
                     @endforeach
                     </div>
                     @endif
-            <li class="flex gap-x-3">
-              <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="mt-1 size-5 flex-none text-indigo-400">
-                <path d="M5.5 17a4.5 4.5 0 0 1-1.44-8.765 4.5 4.5 0 0 1 8.302-3.046 3.5 3.5 0 0 1 4.504 4.272A4 4 0 0 1 15 17H5.5Zm3.75-2.75a.75.75 0 0 0 1.5 0V9.66l1.95 2.1a.75.75 0 1 0 1.1-1.02l-3.25-3.5a.75.75 0 0 0-1.1 0l-3.25 3.5a.75.75 0 1 0 1.1 1.02l1.95-2.1v4.59Z" clip-rule="evenodd" fill-rule="evenodd" />
-              </svg>
-              <span><strong class="font-semibold text-white">Push to deploy.</strong> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.</span>
-            </li>
-            <li class="flex gap-x-3">
-              <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="mt-1 size-5 flex-none text-indigo-400">
-                <path d="M10 1a4.5 4.5 0 0 0-4.5 4.5V9H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-.5V5.5A4.5 4.5 0 0 0 10 1Zm3 8V5.5a3 3 0 1 0-6 0V9h6Z" clip-rule="evenodd" fill-rule="evenodd" />
-              </svg>
-              <span><strong class="font-semibold text-white">SSL certificates.</strong> Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.</span>
-            </li>
-            <li class="flex gap-x-3">
-              <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="mt-1 size-5 flex-none text-indigo-400">
-                <path d="M4.632 3.533A2 2 0 0 1 6.577 2h6.846a2 2 0 0 1 1.945 1.533l1.976 8.234A3.489 3.489 0 0 0 16 11.5H4c-.476 0-.93.095-1.344.267l1.976-8.234Z" />
-                <path d="M4 13a2 2 0 1 0 0 4h12a2 2 0 1 0 0-4H4Zm11.24 2a.75.75 0 0 1 .75-.75H16a.75.75 0 0 1 .75.75v.01a.75.75 0 0 1-.75.75h-.01a.75.75 0 0 1-.75-.75V15Zm-2.25-.75a.75.75 0 0 0-.75.75v.01c0 .414.336.75.75.75H13a.75.75 0 0 0 .75-.75V15a.75.75 0 0 0-.75-.75h-.01Z" clip-rule="evenodd" fill-rule="evenodd" />
-              </svg>
-              <span><strong class="font-semibold text-white">Database backups.</strong> Ac tincidunt sapien vehicula erat auctor pellentesque rhoncus. Et magna sit morbi lobortis.</span>
-            </li>
           </ul>
         </div>
       </div>

@@ -20,30 +20,31 @@ class AuthApiController extends Controller
 
     public function login(Request $request) 
     {
-        $request->validate([
+        $validated = $request->validate([
             'email'    => 'required|email',
             'password' => 'required|string|min:8|max:16',
         ]);
- 
+
         $response = Http::post('http://127.0.0.1:8000/api/auth/login',[
             'email'    => $request->email,
             'password' => $request->password,
         ]);
-        
+
         $data = $response->json();
 
         if ($response->successful()) 
         {
-            $data = $response->json();
-
-            \Log::info('funcionoo entroooo');
-
             session([
                 'token' => $data['token'],
                 'email'  => $request->email,
             ]);
 
             return redirect()->route('news.index');
+        } 
+        else 
+        {
+            $errorMsg = isset($data['message']) ? $data['message'] : 'Credenciales incorrectas.';
+            return back()->withErrors(['login' => $errorMsg])->withInput();
         }
 
     }
@@ -65,7 +66,6 @@ class AuthApiController extends Controller
         ]);
         
         $data = $response->json();
-        \Log::info($data);
         
         if ($response->successful()) 
         {

@@ -23,7 +23,6 @@
         <section class="bg-gray-50 dark:bg-gray-900">
   <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
       <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-          <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo">
           NEWS    
       </a>
       <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
@@ -42,26 +41,32 @@
                       <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
                   </div>
                   <div class="flex items-center justify-between">
-                      <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Recuperar contraseña</a>
+                      <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-neutral-400">Recuperar contraseña</a>
                   </div>
-                  <button type="submit" class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
+                  <button type="submit" class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ingresar</button>
+                  @if($errors->any())
+                  <div class="mb-4 p-3 rounded bg-red-100 border border-red-400 text-red-700">
+                   <ul>
+                       @foreach($errors->all() as $error)
+                           <li>{{ $error }}</li>
+                       @endforeach
+                   </ul>
+                  </div>
+                  @endif
                   <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                       Aun no tienes una cuenta? <a href="/register" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Registrate</a>
                   </p>
               </form>
+              <a href="http://localhost:8000/auth/google" class="px-4 py-2 rounded">
+                    <span class="inline-flex items-center gap-2 text-sm text-gray-700 border border-gray-300 rounded px-3 py-1 bg-white hover:bg-gray-100 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="w-4 h-4"><g><path fill="#4285F4" d="M12 7.5c1.13 0 2.15.39 2.95 1.03l2.2-2.15C15.5 5.3 13.87 4.5 12 4.5c-3.07 0-5.64 1.97-6.6 4.72l2.7 2.1C8.7 9.01 10.21 7.5 12 7.5z"/><path fill="#34A853" d="M20.64 12.2c0-.7-.06-1.37-.18-2H12v3.8h4.84c-.21 1.13-.84 2.09-1.8 2.74l2.7 2.1c1.58-1.46 2.5-3.62 2.5-6.64z"/><path fill="#FBBC05" d="M5.4 14.28c-.24-.7-.38-1.44-.38-2.28s.14-1.58.38-2.28l-2.7-2.1C2.25 8.91 2 10.42 2 12s.25 3.09.7 4.38l2.7-2.1z"/><path fill="#EA4335" d="M12 21c1.87 0 3.44-.62 4.59-1.68l-2.7-2.1c-.75.5-1.71.78-2.89.78-2.22 0-4.1-1.5-4.77-3.53l-2.7 2.1C6.36 19.03 8.93 21 12 21z"/></g></svg>
+                        Iniciar con Google
+                    </span>
+                </a>
           </div>
       </div>
   </div>
 
-   @if($errors->any())
-   <div>
-    <ul>
-        @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-   </div>
-   @endif
 </section>
     </body>
 </html>

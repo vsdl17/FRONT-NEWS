@@ -20,14 +20,13 @@
         @endif
     </head>
     <body>
-        <section class="bg-gray-50 dark:bg-gray-900">
-  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      <section class="bg-gray-50 dark:bg-gray-900 w-full">
+  <div class="flex flex-col items-center justify-center px-2 py-4 mx-auto md:h-screen lg:py-0 w-full max-w-2xl">
       <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-          <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo">
           NEWS    
       </a>
-      <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+      <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-lg xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+          <div class="p-4 space-y-4 md:space-y-6 sm:p-6">
               <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                   Crea tu cuenta
               </h1>
@@ -43,12 +42,39 @@
                   </div>
                   <div>
                       <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tel.</label>
-                      <input type="phone" name="phone" id="phone" required class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="12354678" required="">
+                      <input type="tel" name="phone" id="phone" pattern="[0-9]+" maxlength="12" required class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="12345678" required title="Solo números">
                   </div>
-                  <div>
-                      <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                      <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
-                  </div>
+                                                        <div x-data="{ show: false }">
+                                                                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                                                                <div class="relative">
+                                                                    <input :type="show ? 'text' : 'password'" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                                                                    <button type="button" @click="show = !show" class="absolute right-2 top-2 text-gray-500">
+                                                                        <svg x-show="!show" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12s3.75-7.5 9.75-7.5 9.75 7.5 9.75 7.5-3.75 7.5-9.75 7.5S2.25 12 2.25 12z" />
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                                        </svg>
+                                                                        <svg x-show="show" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 002.25 12s3.75 7.5 9.75 7.5c1.99 0 3.8-.5 5.29-1.357M6.73 6.73A7.478 7.478 0 0112 4.5c6 0 9.75 7.5 9.75 7.5a10.45 10.45 0 01-2.042 3.032M15 12a3 3 0 01-3 3m0 0a3 3 0 01-3-3m3 3L6.73 6.73m6.27 6.27l6.27 6.27" />
+                                                                        </svg>
+                                                                    </button>
+                                                                </div>
+                                                                                                                                <script>
+                                                                                                                                    function generarPassword() {
+                                                                                                                                        const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
+                                                                                                                                        let pass = '';
+                                                                                                                                        for (let i = 0; i < 10; i++) {
+                                                                                                                                            pass += chars.charAt(Math.floor(Math.random() * chars.length));
+                                                                                                                                        }
+                                                                                                                                        return pass;
+                                                                                                                                    }
+                                                                                                                                    document.addEventListener('alpine:init', () => {
+                                                                                                                                        document.getElementById('password').value = generarPassword();
+                                                                                                                                    });
+                                                                                                                                </script>
+                                                        </div>
+</script>
+<!-- Alpine.js -->
+<script src="//unpkg.com/alpinejs" defer></script>
                   <div class="flex items-center justify-between">
                       <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Recuperar contraseña</a>
                   </div>
